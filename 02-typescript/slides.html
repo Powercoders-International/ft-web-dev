@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>TypeScript</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="https://xn--erklr-mir-mal-efb.ch/2021-1/css/theme/powercoders.css"/>
+  <link rel="stylesheet" href="../slides.css"/>
+  <link href='https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css' rel='stylesheet' />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">TypeScript</h1>
+</section>
+
+<section>
+<section id="introduction" class="title-slide slide level2">
+<h2>Introduction</h2>
+
+</section>
+<section id="example-1-motivating-example" class="slide level3">
+<h3><em class="type">Example 1</em> Motivating example</h3>
+<p>There are (at least) 3 bugs in this code. Can you spot them?</p>
+<pre class="html"><code>&lt;input id=&quot;a&quot; type=&quot;number&quot; /&gt; +
+&lt;input id=&quot;b&quot; type=&quot;number&quot; /&gt; =
+&lt;span id=&quot;result &quot;&gt;&lt;/span&gt;
+&lt;script&gt;
+    const aInput = document.getElementById(&quot;a&quot;);
+    const bInput = document.getElementById(&quot;b&quot;);
+    const resultSpan = document.getElementById(&quot;result&quot;);
+    const computeResult = () =&gt;
+        (resultSpan.value = aInput.value + bInput.value);
+    aInput.addEventListener(&quot;input&quot;, computeResult);
+    bInput.addEventListener(&quot;input&quot;, computeResult);
+    computeResult();
+&lt;/script&gt;</code></pre>
+<p><a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/02-typescript/examples/01-addition-bugs">Source</a></p>
+</section>
+<section id="what-is-a-type" class="slide level3">
+<h3>What is a type?</h3>
+<blockquote>
+<p>A type system is a syntaxic method for automatically checking the absence of certain erroneous behaviors by classifying program phrases according to the kinds of values they compute.</p>
+<p>— <em>Benjamin C. Pierce, Types and Programming Languages</em></p>
+</blockquote>
+</section>
+<section id="why-do-we-need-types" class="slide level3">
+<h3>Why do we need types?</h3>
+<ul>
+<li>Early bugs discovery</li>
+<li>Documentation</li>
+<li>Autocompletion</li>
+<li>(Performance)</li>
+</ul>
+</section>
+<section id="variable-type-annotations" class="slide level3">
+<h3>Variable type annotations</h3>
+<p>Typescript (<a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/02-typescript/examples/02-variable-type">example 2</a>):</p>
+<pre class="ts"><code>const foo: number = 42;</code></pre>
+<p>Python (<a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/02-typescript/examples/03-python-variable-type">example 3</a>):</p>
+<pre class="python"><code>foo: int = 42</code></pre>
+<p>C:</p>
+<pre class="c"><code>int foo = 42;</code></pre>
+</section></section>
+<section>
+<section id="everyday-types" class="title-slide slide level2">
+<h2>Everyday types</h2>
+
+</section>
+<section id="reference" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html">TypeScript Handbook &gt; Everyday types</a></p>
+</section>
+<section id="primitive-types" class="slide level3">
+<h3>Primitive types</h3>
+<pre class="ts"><code>const foo: number = 42;
+const bar: string = &quot;Hello world&quot;;
+const baz: boolean = true;
+const qux: undefined = undefined;
+const quux: null = null;</code></pre>
+</section>
+<section id="array-types" class="slide level3">
+<h3>Array types</h3>
+<pre class="ts"><code>const foo: number[] = [42, 451, 1984];
+const bar: string[] = [&quot;Hello Bradbery&quot;, &quot;Hello Orwell&quot;];
+const baz: boolean[] = [false, false, true];</code></pre>
+</section>
+<section id="parameter-type-annotations" class="slide level3">
+<h3>Parameter type annotations</h3>
+<pre class="ts"><code>function greet(name: string) {
+    console.log(&quot;Hello &quot; + name);
+}
+greet(&quot;Ada&quot;);</code></pre>
+</section>
+<section id="return-type-annotations" class="slide level3">
+<h3>Return type annotations</h3>
+<pre class="ts"><code>function greet(name: string): string {
+    return &quot;Hello &quot; + name;
+}
+console.log(greet(&quot;Ada&quot;));
+
+function add(a: number, b: number): number {
+    return a + b;
+}
+console.log(add(40, 2));</code></pre>
+</section>
+<section id="object-types" class="slide level3">
+<h3>Object types</h3>
+<pre class="ts"><code>const center: { x: number; y: number } = { x: 0, y: 0 };
+
+// The parameter&#39;s type annotation is an object type
+function printCoord(point: { x: number; y: number }) {
+    console.log(&quot;The coordinate&#39;s x value is &quot; + point.x);
+    console.log(&quot;The coordinate&#39;s y value is &quot; + point.y);
+}
+
+printCoord(center);</code></pre>
+</section>
+<section id="union-types" class="slide level3">
+<h3>Union types</h3>
+<pre class="ts"><code>const foo: number | string = 42;
+const bar: number | string = &quot;&quot;;
+const baz: number | undefined = 42;
+const qux: number | undefined = undefined;</code></pre>
+</section>
+<section id="type-aliases" class="slide level3">
+<h3>Type aliases</h3>
+<pre class="ts"><code>type Human = { firstname: string; lastname: string };
+type Robot = { serialNumber: number };
+
+function printName(member: Human | Robot) {
+    // ...
+}</code></pre>
+</section>
+<section id="interfaces" class="slide level3">
+<h3>Interfaces</h3>
+<pre class="ts"><code>interface Human {
+    firstname: string;
+    lastname: string;
+}
+
+interface Robot {
+    serialNumber: number;
+}</code></pre>
+</section>
+<section id="interface-extension" class="slide level3">
+<h3>Interface extension</h3>
+<pre class="ts"><code>interface Human {
+    firstname: string;
+    lastname: string;
+}
+
+interface Developer extends Human {
+    githubRepo: string;
+}</code></pre>
+</section></section>
+<section>
+<section id="narrowing" class="title-slide slide level2">
+<h2>Narrowing</h2>
+
+</section>
+<section id="reference-1" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html">TypeScript Handbook &gt; Narrowing</a></p>
+</section>
+<section id="equality-narrowing" class="slide level3">
+<h3>Equality narrowing</h3>
+<p>To differentiate <em>one</em> value (like <code>null</code> or <code>undefined</code>) from other values, we can use an equality check.</p>
+<pre class="ts"><code>function getLength(arg: string | undefined): number {
+    if (arg === undefined) {
+        return 0;
+    } else {
+        return arg.length;
+    }
+}</code></pre>
+</section>
+<section id="typeof-type-guards" class="slide level3">
+<h3><code>typeof</code> type guards</h3>
+<p>To differentiate a primitive type from another, we can use the <code>typeof</code> keyword that returns the type of a variable as a string. This <strong>only</strong> works for primitive types (string, number, boolean, undefined or null).</p>
+<pre class="ts"><code>function sinOrLength(arg: number | string): number {
+    if (typeof arg === &quot;number&quot;) {
+        return Math.sin(arg);
+    } else {
+        return arg.length;
+    }
+}</code></pre>
+</section>
+<section id="discriminated-unions" class="slide level3">
+<h3>Discriminated unions</h3>
+<p>Used to differentiate between interface types.</p>
+<pre class="ts"><code>interface Human {
+    type: &quot;human&quot;;
+    firstname: string;
+    lastname: string;
+}
+interface Robot {
+    type: &quot;robot&quot;;
+    serialNumber: number;
+}
+
+function printName(member: Human | Robot) {
+    if (member.type === &quot;robot&quot;) {
+        console.log(member.serialNumber);
+    } else {
+        console.log(member.firstname + &quot; &quot; + member.lastname);
+    }
+}</code></pre>
+</section>
+<section id="instanceof-narrowing" class="slide level3">
+<h3><code>instanceof</code> narrowing</h3>
+<p>Used to differentiate between class types.</p>
+<pre class="ts"><code>class Human {
+    firstname: string;
+    lastname: string;
+    // constructor ...
+}
+class Robot {
+    serialNumber: number;
+    // constructor ...
+}
+function printName(member: Human | Robot) {
+    if (member instanceof Robot) {
+        console.log(member.serialNumber);
+    } else {
+        console.log(member.firstname + &quot; &quot; + member.lastname);
+    }
+}</code></pre>
+</section></section>
+<section>
+<section id="how-to-use-typescript" class="title-slide slide level2">
+<h2>How to use TypeScript</h2>
+
+</section>
+<section id="compilation" class="slide level3">
+<h3>Compilation</h3>
+<p>TypeScript files cannot be directly understood by a web browser. We need to <em>compile</em> them to JavaScript first.</p>
+<p>In order to do so, we will use Node.js, <a href="https://www.npmjs.com/">NPM</a>, <a href="https://webpack.js.org/">Webpack</a> and the TypeScript compiler.</p>
+</section>
+<section id="node.js" class="slide level3">
+<h3>Node.js</h3>
+<p>Node.js allows to run JavaScript outside of the browser.</p>
+<p>We will it use for two purpose:</p>
+<ol type="1">
+<li>Now: to run <em>build tools</em> which are written in JavaScript,</li>
+<li>Later: to run a web server written in JavaScript.</li>
+</ol>
+</section>
+<section id="npm-project" class="slide level3">
+<h3>NPM Project</h3>
+<p>The <a href="https://www.npmjs.com/"><strong>N</strong>ode <strong>P</strong>ackage <strong>M</strong>anager (NPM)</a> is used to manage the <em>dependencies</em> of a project.</p>
+<p>Each NPM project contains a <code>package.json</code> file that declares the dependencies of the project and other metadata.</p>
+</section>
+<section id="our-package.json-file" class="slide level3">
+<h3>Our <code>package.json</code> file</h3>
+<pre class="json"><code>{
+    &quot;name&quot;: &quot;[your-exercise-name]&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;author&quot;: &quot;[your-name]&quot;,
+    &quot;private&quot;: true,
+    &quot;scripts&quot;: {
+        &quot;build&quot;: &quot;webpack&quot;,
+        &quot;build:watch&quot;: &quot;webpack --watch&quot;
+    },
+    &quot;devDependencies&quot;: {
+        &quot;ts-loader&quot;: &quot;^9.2.3&quot;,
+        &quot;typescript&quot;: &quot;^4.3.2&quot;,
+        &quot;webpack&quot;: &quot;^5.38.1&quot;,
+        &quot;webpack-cli&quot;: &quot;^4.7.0&quot;
+    }
+}</code></pre>
+</section>
+<section id="webpack" class="slide level3">
+<h3>Webpack</h3>
+<p><a href="https://webpack.js.org/">Webpack</a> is the build tool we will use. It can convert files from one language to another and <em>bundle</em> them together. We will use it to convert all TypeScript files from the <code>src</code> directory to a single JavaScript file <code>dist/bundle.js</code>.</p>
+<p>Webpack is configured by a <code>webpack.config.js</code> file.</p>
+</section>
+<section id="our-webpack.config.js-file" class="slide level3">
+<h3>Our <code>webpack.config.js</code> file</h3>
+<pre class="js"><code>const path = require(&quot;path&quot;);
+
+module.exports = {
+    entry: &quot;./src/main.ts&quot;,
+    mode: &quot;development&quot;,
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: &quot;ts-loader&quot;,
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    resolve: {
+        extensions: [&quot;.tsx&quot;, &quot;.ts&quot;, &quot;.js&quot;],
+    },
+    output: {
+        filename: &quot;bundle.js&quot;,
+        path: path.resolve(__dirname, &quot;dist&quot;),
+    },
+};</code></pre>
+</section>
+<section id="typescript-config" class="slide level3">
+<h3>TypeScript config</h3>
+<p>The TypeScript compiler itself also can be configured, using a <code>tsconfig.json</code> file.</p>
+<p>We will use the following:</p>
+<pre class="json"><code>{
+    &quot;compilerOptions&quot;: {
+        &quot;target&quot;: &quot;esnext&quot;,
+        &quot;module&quot;: &quot;esnext&quot;,
+        &quot;strict&quot;: true
+    }
+}</code></pre>
+</section></section>
+<section id="example-4-addition" class="title-slide slide level2">
+<h2><em class="type">Example 4</em> <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/02-typescript/examples/04-addition">Addition</a></h2>
+
+</section>
+
+<section>
+<section id="exercise-1-celcius-fahrenheit-converter" class="title-slide slide level2">
+<h2><em class="type">Exercise 1</em> Celcius-Fahrenheit converter</h2>
+
+</section>
+<section id="goal" class="slide level3">
+<h3>Goal</h3>
+<p>Reproduce the <a href="https://www.google.com/search?q=fahrenheit+celsius">degrees converter from Google search</a>:</p>
+<p><img data-src="images/google-degrees.png" /></p>
+</section>
+<section id="step-1-celsius-fahrenheit-conversion" class="slide level3">
+<h3><em class="type">Step 1</em> Celsius-Fahrenheit conversion</h3>
+<p>The page should contain two <code>&lt;input&gt;</code>: one with the value in Celsius degrees and the second in Fahrenheit degrees.</p>
+<p>Changing the value of one input should automatically update the value of the other.</p>
+<p>Make sure that this also work if an input is empty.</p>
+</section>
+<section id="step-2-extra-unit-choosers" class="slide level3">
+<h3><em class="type">Step 2 (extra)</em> Unit choosers</h3>
+<p>Under each input, there should be a <code>&lt;select&gt;</code> element allowing to change the degrees unit (“Fahrenheit”, “Celsius” or “Kelvin”), as in the Google widget.</p>
+</section></section>
+<section>
+<section id="data-and-view-separation" class="title-slide slide level2">
+<h2>Data and view separation</h2>
+
+</section>
+<section id="risks-with-manual-dom-manipulation" class="slide level3">
+<h3>Risks with manual DOM manipulation</h3>
+<ul>
+<li>It makes the code hard to reason about.</li>
+<li>It makes it easy to introduce bugs, especially mismatch between data and user interface.</li>
+<li>It is not obvious to choose which elements should be static HTML or dynamically generated with JavaScript.</li>
+</ul>
+</section>
+<section id="solution" class="slide level3">
+<h3>Solution</h3>
+<p>Use data as a <em>single source of truth</em>, and derive the view from it.</p>
+<p><strong>The view should never update itself directly.</strong></p>
+</section>
+<section id="diagram" class="slide level3">
+<h3>Diagram</h3>
+<p><img data-src="images/state-view.svg" /></p>
+</section></section>
+<section id="example-5-numbers-sum" class="title-slide slide level2">
+<h2><em class="type">Example 5</em> <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/02-typescript/examples/05-array-sum">Numbers sum</a></h2>
+
+</section>
+
+<section>
+<section id="exercise-2-to-do-list" class="title-slide slide level2">
+<h2><em class="type">Exercise 2</em> To-do list</h2>
+
+</section>
+<section id="setup" class="slide level3">
+<h3>Setup</h3>
+<ul>
+<li>Copy the content of <code>02-typescript/examples/05-array-sum</code> example, or from your first exercise, to a folder <code>02-typescript/02-to-do-list</code> in your exercises repository (so that you have all the configuration files ready).</li>
+<li>Then, run <code>npm install</code>.</li>
+<li>Remove all content of the <code>src/main.ts</code> file.</li>
+<li>To compile your TypeScript code, use the <code>npm run build</code> (to compile once) or <code>npm run build:watch</code> (to automatically recompile on every change).</li>
+</ul>
+</section>
+<section id="step-1-state-type" class="slide level3">
+<h3><em class="type">Step 1</em> <code>State</code> type</h3>
+<ul>
+<li>Define a <code>State</code> type representing the state of your application. It should be an array of objects, each with an attribute <code>done</code> and an attribute <code>title</code>.</li>
+<li>Define an initial example state in a <code>state</code> variable of type <code>State</code>.</li>
+</ul>
+</section>
+<section id="step-2-render-function" class="slide level3">
+<h3><em class="type">Step 2</em> <code>render</code> function</h3>
+<p>Write a <code>render</code> function that renders the state to the DOM.</p>
+</section>
+<section id="step-3-add-item" class="slide level3">
+<h3><em class="type">Step 3</em> Add item</h3>
+<p>Add a way to add a new item to the to-do list.</p>
+</section>
+<section id="step-4-add-checkboxes" class="slide level3">
+<h3><em class="type">Step 4</em> Add checkboxes</h3>
+<p>Display a checkbox for each item showing if the item is done or not. Clicking on the checkbox should change the value of the corresponding <code>done</code> attribute.</p>
+</section>
+<section id="step-5-extra-make-the-items-sorted" class="slide level3">
+<h3><em class="type">Step 5 (extra)</em> Make the items sorted</h3>
+<p>The to-do items should always be sorted alphabetically.</p>
+</section>
+<section id="step-6-extra-store-state-in-local-storage." class="slide level3">
+<h3><em class="type">Step 6 (extra)</em> Store state in local storage.</h3>
+<p>Each time the state changes, save it to local storage so that it can be restored on next page load.</p>
+</section>
+<section id="step-7-extra-add-a-filter-feature" class="slide level3">
+<h3><em class="type">Step 7 (extra)</em> Add a filter feature</h3>
+<p>Add a way to show only items that are done or not done.</p>
+</section></section>
+<section>
+<section id="classes-extra" class="title-slide slide level2">
+<h2>Classes (extra)</h2>
+
+</section>
+<section id="classes" class="slide level3">
+<h3>Classes</h3>
+<p>Remember <a href="https://erklär-mir-mal.ch/2021-1/05-01-js-repetition-with-loops.html#/20">ES6 classes</a>?</p>
+<pre class="js"><code>class Human {
+    constructor(firstname, lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+}</code></pre>
+<p>With type annotations:</p>
+<pre class="ts"><code>class Human {
+    firstname: string;
+    lastname: string;
+    constructor(firstname: string, lastname: string) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+}</code></pre>
+</section>
+<section id="interfaces-vs-classes" class="slide level3">
+<h3>Interfaces vs Classes</h3>
+<p>Here, <code>ada</code> is a <em>POJO</em> (Plain Old JavaScript Object), created using the <em>object literal notation</em> (<code>{ ... }</code>):</p>
+<pre class="ts"><code>interface Human {
+    firstname: string;
+    lastname: string;
+}
+const ada: Human = {
+    firstname: &quot;Ada&quot;,
+    lastname: &quot;Lovelace&quot;,
+};</code></pre>
+</section>
+<section id="interfaces-vs-classes-contd" class="slide level3">
+<h3>Interfaces vs Classes (cont’d)</h3>
+<p>Here <code>ada</code> is an <em>instance</em> of the <code>Human</code> class, constructed with the <code>new</code> keyword:</p>
+<pre class="ts"><code>class Human {
+    firstname: string;
+    lastname: string;
+    constructor(firstname: string, lastname: string) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+}
+const ada: Human = new Human(&quot;Ada&quot;, &quot;Lovelace&quot;);</code></pre>
+</section>
+<section id="interfaces-vs-classes-contd-1" class="slide level3">
+<h3>Interfaces vs Classes (cont’d)</h3>
+<p>The main added value of a class is the possibility to add <em>methods</em>:</p>
+<pre class="ts"><code>class Human {
+    firstname: string;
+    lastname: string;
+    constructor(firstname: string, lastname: string) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+    toString(): string {
+        return this.firstname + &quot; &quot; + this.lastname;
+    }
+}
+const ada: Human = new Human(&quot;Ada&quot;, &quot;Lovelace&quot;);
+ada.toString(); // &quot;Ada Lovelace&quot;</code></pre>
+</section></section>
+<section>
+<section id="exercise-3-the-myhtmlelement-class" class="title-slide slide level2">
+<h2><em class="type">Exercise 3</em> The <code>MyHTMLElement</code> class</h2>
+
+</section>
+<section id="starting-point" class="slide level3">
+<h3>Starting point</h3>
+<pre class="ts"><code>class MyHTMLElement {
+    tagName: string;
+
+    constructor(tagName: string) {
+        this.tagName = tagName;
+    }
+
+    appendChild(child: MyHTMLElement) {}
+}</code></pre>
+<p>Copy this code in a file <code>02-typescript/01-my-html-element.ts</code> in your repository.</p>
+</section>
+<section id="step-1-add-a-children-attribute" class="slide level3">
+<h3><em class="type">Step 1</em> Add a <code>children</code> attribute</h3>
+<p>Add a <code>children</code> attribute to the <code>MyHTMLElement</code> class so that the following code <em>type-checks</em> (for now, this means that nothing should be underlined in red in VSCode):</p>
+<pre class="ts"><code>const element: MyHTMLElement = new MyHTMLElement(&quot;div&quot;, []);
+element.children[0].tagName;</code></pre>
+<p><em>Question:</em> in the real <code>HTMLElement</code> type, is the <code>children</code> attribute an array?</p>
+</section>
+<section id="step-2-add-an-insertbefore-method" class="slide level3">
+<h3><em class="type">Step 2</em> Add an <code>insertBefore</code> method</h3>
+<p>Write an <code>insertBefore</code> method declaration (without implementation) so that the following code type-checks:</p>
+<pre class="ts"><code>const child: MyHTMLElement = new MyHTMLElement(&quot;span&quot;, []);
+const element: MyHTMLElement = new MyHTMLElement(&quot;div&quot;, []);
+element.insertBefore(child, new MyHTMLElement(&quot;span&quot;, []));</code></pre>
+</section>
+<section id="step-3-add-a-queryselector-method" class="slide level3">
+<h3><em class="type">Step 3</em> Add a <code>querySelector</code> method</h3>
+<p>Write a <code>querySelector</code> method declaration that takes a <code>string</code> as an argument and returns either a <code>MyHTMLElement</code> or <code>null</code>. Use <code>return null;</code> as implementation for now.</p>
+</section>
+<section id="step-4-extra-add-a-classlist-attribute" class="slide level3">
+<h3><em class="type">Step 4 (extra)</em> Add a <code>classList</code> attribute</h3>
+<p>Add a <code>classList</code> attribute so that the following code type-checks:</p>
+<pre class="ts"><code>element.classList.add(&quot;a-class&quot;);
+element.classList.has(&quot;a-class&quot;);
+element.classList.remove(&quot;a-class&quot;);</code></pre>
+</section>
+<section id="step-5-extra-implementation" class="slide level3">
+<h3><em class="type">Step 5 (extra)</em> Implementation</h3>
+<p>Write the methods’ implementations.</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/plugin/search/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+      
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-c.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-tsx.min.js"></script>
+    <script>
+    	for (const preEl of document.querySelectorAll("pre")) {
+    		const className = preEl.getAttribute("class");
+
+    		if (className) {
+    			const codeEl = preEl.querySelector("code");
+    			if (!Prism.languages[className]) {
+    				throw new Error(className + " does not exist.");
+    			}
+    			codeEl.innerHTML = Prism.highlight(
+    				codeEl.textContent,
+    				Prism.languages[className],
+    				className
+    			);
+    		}
+    	}
+    </script>
+    </body>
+</html>

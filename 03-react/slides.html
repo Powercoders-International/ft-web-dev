@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>React</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="https://xn--erklr-mir-mal-efb.ch/2021-1/css/theme/powercoders.css"/>
+  <link rel="stylesheet" href="../slides.css"/>
+  <link href='https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css' rel='stylesheet' />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">React</h1>
+</section>
+
+<section>
+<section id="jsx" class="title-slide slide level2">
+<h2>JSX</h2>
+
+</section>
+<section id="dom-apis" class="slide level3">
+<h3>DOM APIs</h3>
+<pre class="ts"><code>const renderArticle = (
+    title: string,
+    author: string,
+    content: string
+) =&gt; {
+    const articleEl = document.createElement(&quot;article&quot;);
+    const titleEl = document.createElement(&quot;h2&quot;);
+    titleEl.innerText = title;
+    articleEl.appendChild(titleEl);
+    const authorEl = document.createElement(&quot;p&quot;);
+    authorEl.setAttribute(&quot;class&quot;, &quot;author&quot;);
+    authorEl.innerText = &quot;By &quot; + author;
+    articleEl.appendChild(authorEl);
+    const contentEl = document.createElement(&quot;div&quot;);
+    contentEl.innerHTML = content;
+    articleEl.appendChild(contentEl);
+    return articleEl;
+};</code></pre>
+<p>What does this function do? Do you like it?</p>
+</section>
+<section id="what-if" class="slide level3">
+<h3>What if</h3>
+<p>What if we could generate our HTML elements directly from JavaScript, but with an HTML-like syntax?</p>
+</section>
+<section id="entering-jsx" class="slide level3">
+<h3>Entering JSX</h3>
+<pre class="tsx"><code>const renderArticle = (
+    title: string,
+    author: string,
+    content: string
+) =&gt; {
+    return (
+        &lt;article&gt;
+            &lt;h2&gt;{title}&lt;/h2&gt;
+            &lt;p className=&quot;author&quot;&gt;By {author}&lt;/p&gt;
+            &lt;div&gt;{content}&lt;/div&gt;
+        &lt;/article&gt;
+    );
+};</code></pre>
+</section></section>
+<section id="example-1-hello-react" class="title-slide slide level2">
+<h2><em class="type">Example 1</em> <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/03-react/examples/01-hello-react">Hello react</a></h2>
+
+</section>
+
+<section>
+<section id="exercise-1-random-book" class="title-slide slide level2">
+<h2><em class="type">Exercise 1</em> Random book</h2>
+
+</section>
+<section id="goal" class="slide level3">
+<h3>Goal</h3>
+<p>Display a random book title form the following list:</p>
+<pre class="typescript"><code>const books: string[] = [
+    &quot;Anna Karenina&quot;,
+    &quot;To Kill a Mockingbird&quot;,
+    &quot;The Great Gatsby&quot;,
+    &quot;One Hundred Years of Solitude&quot;,
+    &quot;A Passage to India&quot;,
+    &quot;Invisible Man&quot;,
+    &quot;Don Quixote&quot;,
+    &quot;Beloved&quot;,
+    &quot;Mrs. Dalloway&quot;,
+    &quot;Things Fall Apart&quot;,
+    &quot;Jane Eyre&quot;,
+    &quot;The Color Purple&quot;,
+];</code></pre>
+</section>
+<section id="step-1-add-the-react-boilerplate" class="slide level3">
+<h3><em class="type">Step 1</em> Add the React boilerplate</h3>
+<ul>
+<li>Copy the content of <code>03-react/examples/01-hello-react</code> example to a folder <code>03-react/01-random-book</code> in your exercises repository.</li>
+<li>Then, run <code>npm install</code>.</li>
+<li>To compile your TypeScript code, use the <code>npm run build</code> (to compile once) or <code>npm run build:watch</code> (to automatically recompile on every change).</li>
+</ul>
+</section>
+<section id="step-2-random-book" class="slide level3">
+<h3><em class="type">Step 2</em> Random book</h3>
+<ul>
+<li>In <code>main.ts</code>, write a <code>getRandomBook()</code> function that returns a random book from the array. Your function should have an explicit return type annotation.</li>
+<li>Update the React <code>App</code> component to display a random book on every page load.</li>
+</ul>
+</section>
+<section id="step-3-random-color" class="slide level3">
+<h3><em class="type">Step 3</em> Random color</h3>
+<ul>
+<li>In <code>main.ts</code>, write a <code>getRandomColor()</code> function that returns a random color. Your function should have an explicit return type annotation.</li>
+<li>Use the <code>getRandomColor()</code> function to also randomly change the <code>background-color</code> of your book title.</li>
+</ul>
+</section></section>
+<section>
+<section id="conditional-rendering" class="title-slide slide level2">
+<h2>Conditional rendering</h2>
+
+</section>
+<section id="reference" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://reactjs.org/docs/conditional-rendering.html">Conditional rendering, React docs</a></p>
+</section>
+<section id="if-else" class="slide level3">
+<h3>If-else</h3>
+<pre class="tsx"><code>function App() {
+    const userConnected: boolean = false;
+
+    if (userConnected) {
+        return &lt;button&gt;Show my profile&lt;/button&gt;;
+    }
+    return &lt;button&gt;Log in&lt;/button&gt;;
+}</code></pre>
+</section>
+<section id="conditional-operator" class="slide level3">
+<h3>Conditional operator</h3>
+<pre class="tsx"><code>function App() {
+    const userConnected: boolean = false;
+    return (
+        &lt;div className={userConnected ? &quot;guest&quot; : &quot;user&quot;}&gt;&lt;/div&gt;
+    );
+}</code></pre>
+</section></section>
+<section>
+<section id="lists" class="title-slide slide level2">
+<h2>Lists</h2>
+
+</section>
+<section id="reference-1" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://reactjs.org/docs/lists-and-keys.html">Lists and key, React docs</a></p>
+</section>
+<section id="using-.map" class="slide level3">
+<h3>Using <code>.map()</code></h3>
+<pre class="tsx"><code>const books: string[] = [
+    &quot;Anna Karenina&quot;,
+    &quot;To Kill a Mockingbird&quot;,
+];
+
+const App = () =&gt; (
+    &lt;ul&gt;
+        {books.map(title =&gt; &lt;li&gt;{title}&lt;/li&gt;))}
+    &lt;/ul&gt;
+);</code></pre>
+</section>
+<section id="keys" class="slide level3">
+<h3>Keys</h3>
+<p>When rendering a list, each element of the list should have <strong>unique</strong> <code>key</code> prop.</p>
+<pre class="tsx"><code>const books: string[] = [
+    &quot;Anna Karenina&quot;,
+    &quot;To Kill a Mockingbird&quot;,
+];
+
+const App = () =&gt; (
+    &lt;ul&gt;
+        {books.map(title =&gt; &lt;li key={title}&gt;{title}&lt;/li&gt;))}
+    &lt;/ul&gt;
+);</code></pre>
+</section></section>
+<section>
+<section id="components" class="title-slide slide level2">
+<h2>Components</h2>
+
+</section>
+<section id="reference-2" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://reactjs.org/docs/components-and-props.html">Components and Props, React docs</a></p>
+</section>
+<section id="defining-a-component" class="slide level3">
+<h3>Defining a component</h3>
+<pre class="tsx"><code>function Comment() {
+    return (
+        &lt;article&gt;
+            &lt;h2&gt;My comment&lt;/h2&gt;
+            &lt;p className=&quot;author&quot;&gt;By Matt&lt;/p&gt;
+            &lt;p&gt;I think that…&lt;/p&gt;
+        &lt;/article&gt;
+    );
+}
+
+function App() {
+    return &lt;Comment /&gt;;
+}</code></pre>
+</section>
+<section id="props" class="slide level3">
+<h3>Props</h3>
+<pre class="tsx"><code>interface CommentProps {
+    title: string;
+    author: string;
+    content: string;
+}
+
+function Comment(props: CommentProps) {
+    return (
+        &lt;article&gt;
+            &lt;h2&gt;{props.title}&lt;/h2&gt;
+            &lt;p className=&quot;author&quot;&gt;By {props.author}&lt;/p&gt;
+            &lt;p&gt;{props.content}&lt;/p&gt;
+        &lt;/article&gt;
+    );
+}
+
+function App() {
+    return (
+        &lt;Comment
+            title=&quot;Evidence&quot;
+            author=&quot;René&quot;
+            content=&quot;Cogito, ergo sum&quot;
+        /&gt;
+    );
+}</code></pre>
+</section>
+<section id="object-as-prop" class="slide level3">
+<h3>Object as prop</h3>
+<pre class="tsx"><code>interface CommentInfo {
+    title: string;
+    author: string;
+    content: string;
+}
+
+interface CommentProps {
+    comment: CommentInfo;
+}
+
+function Comment(props: CommentProps) {
+    return (
+        &lt;article&gt;
+            &lt;h2&gt;{props.comment.title}&lt;/h2&gt;
+            &lt;p className=&quot;author&quot;&gt;By {props.comment.author}&lt;/p&gt;
+            &lt;p&gt;{props.comment.content}&lt;/p&gt;
+        &lt;/article&gt;
+    );
+}
+
+function App() {
+    const discourse: CommentInfo = {
+        title: &quot;Evidence&quot;,
+        author: &quot;René&quot;,
+        content: &quot;Cogito, ergo sum&quot;,
+    };
+
+    return &lt;Comment comment={discourse} /&gt;;
+}</code></pre>
+</section></section>
+<section id="example-2-books-list" class="title-slide slide level2">
+<h2><em class="type">Example 2</em> <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/03-react/examples/02-books">Books list</a></h2>
+
+</section>
+
+<section>
+<section id="exercise-2-users-list" class="title-slide slide level2">
+<h2><em class="type">Exercise 2</em> Users list</h2>
+
+</section>
+<section id="goal-1" class="slide level3">
+<h3>Goal</h3>
+<p>Display the following list of users in two sections <code>Adults</code> and <code>Kids</code>:</p>
+<pre class="typescript"><code>const users = [
+    {
+        id: 1,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/nicollerich_128.jpg&quot;,
+        first_name: &quot;Claire&quot;,
+        last_name: &quot;Price&quot;,
+        age: 12,
+        city: &quot;North Kirstin&quot;,
+        ip: &quot;161.208.247.105&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 2,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/edobene_128.jpg&quot;,
+        first_name: &quot;Carrie&quot;,
+        last_name: &quot;Mayer&quot;,
+        age: 62,
+        city: &quot;Everettetown&quot;,
+        ip: &quot;123.224.60.146&quot;,
+        isAdmin: true,
+    },
+    {
+        id: 3,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/rodnylobos_128.jpg&quot;,
+        first_name: &quot;Jessy&quot;,
+        last_name: &quot;Kassulke&quot;,
+        age: 8,
+        city: &quot;Lake Fordhaven&quot;,
+        ip: &quot;164.89.151.58&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 4,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/charliegann_128.jpg&quot;,
+        first_name: &quot;Amalia&quot;,
+        last_name: &quot;Rogahn&quot;,
+        age: 108,
+        city: &quot;South Russberg&quot;,
+        ip: &quot;162.25.24.120&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 5,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/jmfsocial_128.jpg&quot;,
+        first_name: &quot;Kristoffer&quot;,
+        last_name: &quot;Wuckert&quot;,
+        age: 66,
+        city: &quot;Lake Angelina&quot;,
+        ip: &quot;85.179.25.149&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 6,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/craigrcoles_128.jpg&quot;,
+        first_name: &quot;Kiera&quot;,
+        last_name: &quot;Rohan&quot;,
+        age: 36,
+        city: &quot;East Beverly&quot;,
+        ip: &quot;27.34.243.77&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 7,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/bruno_mart_128.jpg&quot;,
+        first_name: &quot;Emmie&quot;,
+        last_name: &quot;Hand&quot;,
+        age: 74,
+        city: &quot;New Maryjaneberg&quot;,
+        ip: &quot;85.232.129.225&quot;,
+        isAdmin: true,
+    },
+    {
+        id: 8,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/woodsman001_128.jpg&quot;,
+        first_name: &quot;Cameron&quot;,
+        last_name: &quot;Veum&quot;,
+        age: 16,
+        city: &quot;Altadena&quot;,
+        ip: &quot;168.252.158.225&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 9,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/markwienands_128.jpg&quot;,
+        first_name: &quot;Tremaine&quot;,
+        last_name: &quot;Sanford&quot;,
+        age: 10,
+        city: &quot;Lenexa&quot;,
+        ip: &quot;38.83.7.48&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 10,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/ah_lice_128.jpg&quot;,
+        first_name: &quot;Ronaldo&quot;,
+        last_name: &quot;Weissnat&quot;,
+        age: 83,
+        city: &quot;Baumbachtown&quot;,
+        ip: &quot;50.218.254.52&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 11,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/zaki3d_128.jpg&quot;,
+        first_name: &quot;Ephraim&quot;,
+        last_name: &quot;Goyette&quot;,
+        age: 63,
+        city: &quot;North Martina&quot;,
+        ip: &quot;147.105.193.65&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 12,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/boxmodel_128.jpg&quot;,
+        first_name: &quot;Clay&quot;,
+        last_name: &quot;Kunde&quot;,
+        age: 113,
+        city: &quot;South Damon&quot;,
+        ip: &quot;209.104.243.157&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 13,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/VinThomas_128.jpg&quot;,
+        first_name: &quot;Melisa&quot;,
+        last_name: &quot;Leannon&quot;,
+        age: 18,
+        city: &quot;Hilo&quot;,
+        ip: &quot;103.82.167.168&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 14,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/miguelmendes_128.jpg&quot;,
+        first_name: &quot;Clovis&quot;,
+        last_name: &quot;Medhurst&quot;,
+        age: 15,
+        city: &quot;Harveybury&quot;,
+        ip: &quot;168.223.235.220&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 15,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/mandalareopens_128.jpg&quot;,
+        first_name: &quot;Mylene&quot;,
+        last_name: &quot;Renner&quot;,
+        age: 49,
+        city: &quot;Arlington&quot;,
+        ip: &quot;223.89.148.36&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 16,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/ma_tiax_128.jpg&quot;,
+        first_name: &quot;Marcos&quot;,
+        last_name: &quot;Ferry&quot;,
+        age: 47,
+        city: &quot;Strackehaven&quot;,
+        ip: &quot;74.94.165.210&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 17,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/balakayuriy_128.jpg&quot;,
+        first_name: &quot;Brain&quot;,
+        last_name: &quot;Mohr&quot;,
+        age: 54,
+        city: &quot;Carrollton&quot;,
+        ip: &quot;11.121.113.44&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 18,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/aleclarsoniv_128.jpg&quot;,
+        first_name: &quot;Bella&quot;,
+        last_name: &quot;VonRueden&quot;,
+        age: 18,
+        city: &quot;Columbia&quot;,
+        ip: &quot;224.144.68.251&quot;,
+        isAdmin: true,
+    },
+    {
+        id: 19,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/andrewarrow_128.jpg&quot;,
+        first_name: &quot;Franz&quot;,
+        last_name: &quot;Raynor&quot;,
+        age: 28,
+        city: &quot;Garrickchester&quot;,
+        ip: &quot;91.159.111.88&quot;,
+        isAdmin: false,
+    },
+    {
+        id: 20,
+        avatar:
+            &quot;https://cdn.fakercloud.com/avatars/carlosgavina_128.jpg&quot;,
+        first_name: &quot;Celestino&quot;,
+        last_name: &quot;Bailey&quot;,
+        age: 61,
+        city: &quot;Aronport&quot;,
+        ip: &quot;242.25.16.144&quot;,
+        isAdmin: false,
+    },
+];</code></pre>
+</section>
+<section id="step-1-add-the-react-boilerplate-1" class="slide level3">
+<h3><em class="type">Step 1</em> Add the React boilerplate</h3>
+<ul>
+<li>Copy the content of <code>03-react/examples/01-hello-react</code> example to a folder <code>03-react/02-users-list</code> in your exercises repository.</li>
+<li>Then, run <code>npm install</code>.</li>
+<li>To compile your TypeScript code, use the <code>npm run build</code> (to compile once) or <code>npm run build:watch</code> (to automatically recompile on every change).</li>
+</ul>
+</section>
+<section id="step-2-userinfo-interface" class="slide level3">
+<h3><em class="type">Step 2</em> <code>UserInfo</code> interface</h3>
+<p>Write a <code>UserInfo</code> interface, and add an explicit type annotation to the <code>users</code> constant.</p>
+</section>
+<section id="step-3-all-users-list" class="slide level3">
+<h3><em class="type">Step 3</em> All users list</h3>
+<p>Update the <code>App</code> component so that it displays all users (no component and no filtering yet).</p>
+</section>
+<section id="step-4-user-component" class="slide level3">
+<h3><em class="type">Step 4</em> <code>User</code> component</h3>
+<p>Extract the code that shows a single user to a <code>User</code> component in <code>src/components/User</code>. The component should have a single prop of type <code>UserInfo</code>.</p>
+</section>
+<section id="step-5-separate-adults-and-kids-sections" class="slide level3">
+<h3><em class="type">Step 5</em> Separate adults and kids sections</h3>
+<p>Display the users in two separate sections depending on their age.</p>
+</section>
+<section id="step-6-admin-badge" class="slide level3">
+<h3><em class="type">Step 6</em> Admin badge</h3>
+<p>Next to the name of each user, display a badge if it is an admin.</p>
+</section></section>
+<section>
+<section id="recap-es6-destructuring" class="title-slide slide level2">
+<h2><em class="type">Recap</em> ES6 destructuring</h2>
+
+</section>
+<section id="reference-3" class="slide level3">
+<h3>Reference</h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">Destructuring assignment, MDN</a></li>
+<li><a href="https://erklär-mir-mal.ch/2021-1/05-01-js-repetition-with-loops.html#/21">Slide from a few weeks ago</a></li>
+</ul>
+</section>
+<section id="array-destructuring" class="slide level3">
+<h3>Array destructuring</h3>
+<pre class="js"><code>// This is a shorthand:
+const [hello, world] = [&quot;Hello&quot;, &quot;World&quot;];
+
+// for this:
+const myArray = [&quot;Hello&quot;, &quot;World&quot;];
+const hello = myArray[0];
+const world = myArray[1];</code></pre>
+</section>
+<section id="object-destructuring" class="slide level3">
+<h3>Object destructuring</h3>
+<pre class="js"><code>// This is a shorthand:
+const { firstname, lastname } = {
+    firstname: &quot;Ada&quot;,
+    lastname: &quot;Lovelace&quot;,
+};
+
+// for this:
+const myObject = { firstname: &quot;Ada&quot;, lastname: &quot;Lovelace&quot; };
+const firstname = myObject.firstname;
+const lastname = myObject.lastname;</code></pre>
+</section></section>
+<section>
+<section id="events" class="title-slide slide level2">
+<h2>Events</h2>
+
+</section>
+<section id="reference-4" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://reactjs.org/docs/handling-events.html">Handling Events</a></p>
+</section>
+<section id="onclick-prop" class="slide level3">
+<h3><code>onClick</code> prop</h3>
+<p>To listen on clicks:</p>
+<pre class="tsx"><code>&lt;button onClick={() =&gt; console.log(&quot;Button clicked!&quot;)}&gt;
+    Click me!
+&lt;/button&gt;</code></pre>
+</section>
+<section id="onchange-prop" class="slide level3">
+<h3><code>onChange</code> prop</h3>
+<p>To listen on input changes:</p>
+<pre class="tsx"><code>return (
+    &lt;input
+        type=&quot;text&quot;
+        onChange={(e) =&gt;
+            console.log(&quot;New value: &quot; + e.target.value)
+        }
+    /&gt;
+);</code></pre>
+</section>
+<section id="type-of-onchange-event" class="slide level3">
+<h3>Type of <code>onChange</code> event</h3>
+<p>As in the DOM API, the handler takes an event object as parameter, with a <code>target</code> property referring the to event target (HTML element on which the event was triggered).</p>
+<p>When you write the handler inline as in the previous slide, you do not need a parameter type annotation. However, if you want to declare your function elsewhere, you will need to tell TypeScript that the event is of type <code>React.ChangeEvent&lt;HTMLInputElement&gt;</code>:</p>
+<pre class="tsx"><code>const handleChange = (
+    e: React.ChangeEvent&lt;HTMLInputElement&gt;
+) =&gt; console.log(&quot;New value: &quot; + e.target.value);
+return &lt;input type=&quot;text&quot; onChange={handleChange} /&gt;;</code></pre>
+<p><small>For now, let’s assume <code>React.ChangeEvent&lt;HTMLInputElement&gt;</code> represents “an object with a <code>target</code> property of type <code>HTMLInputElement</code>”. We will learn about <a href="https://www.typescriptlang.org/docs/handbook/2/generics.html">generics</a> later.</small></p>
+</section></section>
+<section>
+<section id="usestate-hook" class="title-slide slide level2">
+<h2><code>useState</code> hook</h2>
+
+</section>
+<section id="reference-5" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://reactjs.org/docs/hooks-state.html">Using the State Hook</a></p>
+</section>
+<section id="usage" class="slide level3">
+<h3>Usage</h3>
+<pre class="tsx"><code>const App = () =&gt; {
+    // `0` is the initial value, before `setCounter` is ever called.
+    const [counter, setCounter] = React.useState(0);
+
+    // We can read the state value using `counter`, or
+    // change it by calling `setCounter(newValue)`.
+
+    return (
+        &lt;main&gt;
+            &lt;p&gt;{counter}&lt;/p&gt;
+            &lt;button onClick={() =&gt; setCounter(counter + 1)}&gt;
+                Increment
+            &lt;/button&gt;
+        &lt;/main&gt;
+    );
+};</code></pre>
+<p>React will take care of automatically re-rendering the component when the state changes.</p>
+<p>In this case, the view will be updated when calling <code>setCounter()</code>.</p>
+</section></section>
+<section id="example-3-counter" class="title-slide slide level2">
+<h2><em class="type">Example 3</em> <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/03-react/examples/03-counter">Counter</a></h2>
+
+</section>
+
+<section id="example-4-addition" class="title-slide slide level2">
+<h2><em class="type">Example 4</em> <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/03-react/examples/04-addition">Addition</a></h2>
+
+</section>
+
+<section>
+<section id="exercise-3-random-book-on-click" class="title-slide slide level2">
+<h2><em class="type">Exercise 3</em> Random book on click</h2>
+
+</section>
+<section id="goal-2" class="slide level3">
+<h3>Goal</h3>
+<p>On every click, display a different book, with a different background color.</p>
+</section>
+<section id="step-1-add-the-react-boilerplate-2" class="slide level3">
+<h3><em class="type">Step 1</em> Add the React boilerplate</h3>
+<ul>
+<li>Copy the content of <code>03-react/examples/01-hello-react</code> example to a folder <code>03-react/03-random-book-on-click</code> in your exercises repository.</li>
+<li>Then, run <code>npm install</code>.</li>
+<li>To compile your TypeScript code, use the <code>npm run build</code> (to compile once) or <code>npm run build:watch</code> (to automatically recompile on every change).</li>
+</ul>
+</section></section>
+<section>
+<section id="exercise-4-degrees-converter" class="title-slide slide level2">
+<h2><em class="type">Exercise 4</em> Degrees converter</h2>
+
+</section>
+<section id="goal-3" class="slide level3">
+<h3>Goal</h3>
+<p>Reproduce your degrees converter in React.</p>
+</section>
+<section id="step-1-add-the-react-boilerplate-3" class="slide level3">
+<h3><em class="type">Step 1</em> Add the React boilerplate</h3>
+<ul>
+<li>Copy the content of <code>03-react/examples/01-hello-react</code> example to a folder <code>03-react/04-converter</code> in your exercises repository.</li>
+<li>Then, run <code>npm install</code>.</li>
+<li>To compile your TypeScript code, use the <code>npm run build</code> (to compile once) or <code>npm run build:watch</code> (to automatically recompile on every change).</li>
+</ul>
+</section></section>
+<section>
+<section id="recap-fetch-api-and-promises" class="title-slide slide level2">
+<h2>Recap: <code>fetch</code> API and promises</h2>
+
+</section>
+<section id="reference-6" class="slide level3">
+<h3>Reference</h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">Using Fetch, MDN</a></li>
+<li><a href="https://erklär-mir-mal.ch/2021-1/06-02-ajax+json.html#/22">Slides from a few weeks ago</a></li>
+</ul>
+</section>
+<section id="usage-with-then-and-catch" class="slide level3">
+<h3>Usage with <code>then()</code> and <code>catch()</code></h3>
+<pre class="js"><code>fetch(&quot;https://api.quotable.io/random&quot;)
+    .then((response) =&gt; {
+        console.log(&quot;HTTP Response status: &quot; + response.status);
+        return response.json();
+    })
+    .then((data) =&gt; console.log(data));</code></pre>
+</section>
+<section id="usage-with-async-and-await" class="slide level3">
+<h3>Usage with <code>async</code> and <code>await</code></h3>
+<pre class="js"><code>const getMyQuote = async () =&gt; {
+    const response = await fetch(
+        &quot;https://api.quotable.io/random&quot;
+    );
+    console.log(&quot;HTTP Response status: &quot; + response.status);
+    const data = await response.json();
+    console.log(data);
+};</code></pre>
+</section>
+<section id="adding-query-parameters-to-a-url" class="slide level3">
+<h3>Adding query parameters to a URL</h3>
+<pre class="js"><code>const url = new URL(&quot;https://api.example.com&quot;);
+url.searchParams.append(&quot;q&quot;, &quot;Hello World&quot;);
+url.searchParams.append(&quot;sort&quot;, &quot;year&quot;);
+console.log(url.toString());</code></pre>
+</section>
+<section id="type-of-response.json" class="slide level3">
+<h3>Type of <code>response.json()</code></h3>
+<p><code>response.json()</code> returns an object of type <code>any</code>:</p>
+<pre class="js"><code>const data: any = await response.json();</code></pre>
+<p>This means that you can assign it to any type, and TypeScript will <em>not</em> check it. This is because TypeScript could not possibly know what will be returned by your request. Therefore, your need to be extra careful to assign it to the correct type.</p>
+</section>
+<section id="typed-usestate" class="slide level3">
+<h3>Typed <code>useState()</code></h3>
+<p>You can explicitly set the type of a React state value:</p>
+<pre class="ts"><code>const [value, setValue] = React.useState&lt;boolean&gt;(true);</code></pre>
+</section></section>
+<section id="example-5-random-quote" class="title-slide slide level2">
+<h2><em class="type">Example 5</em> <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/03-react/examples/05-random-quote">Random quote</a></h2>
+
+</section>
+
+<section>
+<section id="exercise-5-images-search" class="title-slide slide level2">
+<h2><em class="type">Exercise 5</em> Images search</h2>
+
+</section>
+<section id="goal-4" class="slide level3">
+<h3>Goal</h3>
+<p>On your page, there should be a text input and a <code>Search images</code> button. When clicking on the button, you should show 10 related images found with the <a href="https://pixabay.com/api/docs/">Pixabay API</a>.</p>
+</section>
+<section id="step-1-add-the-react-boilerplate-4" class="slide level3">
+<h3><em class="type">Step 1</em> Add the React boilerplate</h3>
+<ul>
+<li>Copy the content of <code>03-react/examples/05-random-quote</code> example to a folder <code>03-react/05-images-search</code> in your exercises repository.</li>
+<li>Then, run <code>npm install</code>.</li>
+<li>To compile your TypeScript code, use the <code>npm run build</code> (to compile once) or <code>npm run build:watch</code> (to automatically recompile on every change).</li>
+</ul>
+</section>
+<section id="step-2-find-the-search-api-method" class="slide level3">
+<h3><em class="type">Step 2</em> Find the search API method</h3>
+<p>Find which API method you will need to call to get your results. Try an example in your browser and study the JSON response.</p>
+</section>
+<section id="step-3-write-a-pixbaysearch-type" class="slide level3">
+<h3><em class="type">Step 3</em> Write a <code>PixbaySearch</code> type</h3>
+<p>Write a <code>PixbaySearch</code> interface corresponding to the data you expect back from your request to the API.</p>
+<p><strong>Note:</strong> you only need to declare the object properties that you will use.</p>
+</section>
+<section id="step-4-define-a-state-of-type-pixbaysearch-null" class="slide level3">
+<h3><em class="type">Step 4</em> Define a state of type <code>PixbaySearch | null</code></h3>
+<p>To create a state variable of type <code>PixbaySearch | null</code>, which an initial value of <code>null</code>, use:</p>
+<pre class="tsx"><code>const [data, setData] =
+    React.useState&lt;PixbaySearch | null&gt;(null);</code></pre>
+</section>
+<section id="step-5-add-the-click-event-listener" class="slide level3">
+<h3><em class="type">Step 5</em> Add the click event listener</h3>
+<p>Add a minimal view that just shows your <code>data</code> state variable as JSON (<code>JSON.strinfify(data)</code>) in a <code>&lt;pre&gt;</code> element, and a button that will call the API and update the state using <code>setData(...)</code>.</p>
+</section>
+<section id="step-6-write-the-view" class="slide level3">
+<h3><em class="type">Step 6</em> Write the view</h3>
+<p>Write the actual code displaying your <code>data</code>:</p>
+<ul>
+<li>Before the button is clicked, “Type something and click ‘Search images’” should be displayed.</li>
+<li>If the button has been pressed but not images have been found, you should display “No images found”.</li>
+<li>If the button has been pressed and images have been found, show the images.</li>
+</ul>
+</section></section>
+<section>
+<section id="recap-arrow-functions" class="title-slide slide level2">
+<h2><em class="type">Recap</em> Arrow functions</h2>
+
+</section>
+<section id="reference-7" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#syntax">Array functions expressions &gt; Syntax, MDN</a></p>
+</section>
+<section id="shortest-form" class="slide level3">
+<h3>Shortest form</h3>
+<pre class="ts"><code>const pow2 = (n: number): number =&gt; n * n;</code></pre>
+<p>Here, parentheses are optional.</p>
+</section>
+<section id="multiple-or-no-parameters" class="slide level3">
+<h3>Multiple or no parameters</h3>
+<pre class="ts"><code>const pow2 = (): string =&gt; &quot;Hello world&quot;;
+const add = (a: number, b: number): number =&gt; a + b;</code></pre>
+<p>Here, parentheses are mandatory.</p>
+</section>
+<section id="multiline-statements" class="slide level3">
+<h3>Multiline statements</h3>
+<pre class="ts"><code>const greet = (name: string): string =&gt; {
+    const result = `Hello ${name}!`;
+    return result;
+};</code></pre>
+<p>To write several statements in the body of the function, we must add brackets around the body and a return statement.</p>
+</section>
+<section id="function-types" class="slide level3">
+<h3>Function types</h3>
+<pre class="ts"><code>const greet = (
+    name: string,
+    transform: (name: string) =&gt; string
+): string =&gt; {
+    const transformedName = transform(name);
+    const result = `Hello ${transformedName}!`;
+    return result;
+};</code></pre>
+<p>The syntax for function types is similar to array functions</p>
+</section>
+<section id="mini-exercise-types-of-array-methods" class="slide level3">
+<h3><em class="type">Mini-exercise</em> Types of array methods</h3>
+<p>Think how to specify the type of <code>f</code> in these functions:</p>
+<ul>
+<li><code>map(array: number[], f: ???)</code>: apply <code>f</code> to each item.</li>
+<li><code>filter(array: number[], f: ???)</code>: only keep elements where <code>f(element)</code> returns <code>true</code>.</li>
+<li><code>reduce(array: number[], f: ???)</code>: <code>f</code> takes two parameters, the current <em>accumulated value</em>, and an item. It is uses to <em>reduce</em> the array to a single value.</li>
+</ul>
+</section>
+<section id="mini-exercise-reduce-usage" class="slide level3">
+<h3><em class="type">Mini-exercise</em> <code>reduce</code> usage</h3>
+<p>Use <code>Array.prototype.reduce()</code> to:</p>
+<ul>
+<li>compute the sum of the elements in an array,</li>
+<li>compute the minimum element in an array,</li>
+<li>find the first non-null element in an array.</li>
+</ul>
+</section>
+<section id="example-implementation-of-map" class="slide level3">
+<h3>Example implementation of <code>map()</code></h3>
+<p>Example implementation of <code>map()</code> for an array of numbers:</p>
+<pre class="ts"><code>const map = (
+    numbers: number[],
+    f: (n: number) =&gt; number
+) =&gt; {
+    const result: number[] = [];
+    for (const n of numbers) {
+        result.push(f(n));
+    }
+    return result;
+};
+
+map([1, 2, 3], (x) =&gt; x * x);
+// Returns [1, 4, 9]
+
+map([1, 2, 3], (x) =&gt; x * 2);
+// Returns [2, 4, 6]</code></pre>
+</section>
+<section id="example-implementation-of-filter" class="slide level3">
+<h3>Example implementation of <code>filter()</code></h3>
+<p>Example implementation of <code>filter()</code> for an array of numbers:</p>
+<pre class="ts"><code>const filter = (
+    numbers: number[],
+    f: (n: number) =&gt; boolean
+) =&gt; {
+    const result: number[] = [];
+    for (const n of numbers) {
+        if (f(n)) {
+            result.push(n);
+        }
+    }
+    return result;
+};
+
+filter([1, -5, 6, -9, 2, 3], (x) =&gt; x &gt;= 0);
+// Returns [1, 6, 2, 3]
+
+filter([0, 5, 8, 2, 9, 3], (x) =&gt; x % 2 === 0);
+// Returns [0, 8, 2]</code></pre>
+</section>
+<section id="example-implementation-of-reduce" class="slide level3">
+<h3>Example implementation of <code>reduce()</code></h3>
+<p>Example implementation of <code>reduce()</code> for an array of numbers:</p>
+<pre class="ts"><code>const reduce = (
+    numbers: number[],
+    f: (a: number, b: number) =&gt; number,
+    initialValue: number
+) =&gt; {
+    let acc = initialValue;
+    for (const n of numbers) {
+        acc = f(acc, n);
+    }
+    return acc;
+};
+
+reduce([1, 2, 3], (a, b) =&gt; a + b, 0);
+// Returns 6
+
+reduce(
+    [2, 1, 3],
+    (a, b) =&gt; Math.min(a, b),
+    Number.MAX_SAFE_INTEGER
+);
+// Returns 1</code></pre>
+</section></section>
+<section>
+<section id="object-and-array-state-updates" class="title-slide slide level2">
+<h2>Object and array state updates</h2>
+
+</section>
+<section id="state-in-react-is-considered-immutable" class="slide level3">
+<h3>State in React is considered <em>immutable</em></h3>
+<pre class="tsx"><code>const [numbers, setNumbers] = React.useState([1, 2, 3]);
+
+numbers[2] = 42;
+setNumbers(numbers); // THIS DOES NOT WORK!</code></pre>
+</section>
+<section id="referential-equality-examples" class="slide level3">
+<h3>Referential equality examples</h3>
+<pre class="js"><code>[] === []; // false
+[1, 2, 3] === [1, 2, 3]; // false
+{&quot;firstname&quot;: &quot;Ada&quot;} === {&quot;firstname&quot;: &quot;Ada&quot;}; // false
+{} === {};  // false
+
+const a = [1, 2, 3];
+const b = a;
+a === b;  // true
+
+b.push(42)
+a === b // true</code></pre>
+</section>
+<section id="referential-equality-video" class="slide level3">
+<h3>Referential equality video</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/p8MpTvVYLVI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</section>
+<section id="array-slice-method" class="slide level3">
+<h3>Array slice method</h3>
+<p>See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice"><code>Array.prototype.slice()</code></a>.</p>
+</section>
+<section id="array-spread-syntax" class="slide level3">
+<h3>Array spread syntax</h3>
+<pre class="js"><code>const a = [1, 2, 3];
+const b = [...a, 6];</code></pre>
+</section>
+<section id="append-to-an-array" class="slide level3">
+<h3>Append to an array</h3>
+<pre class="ts"><code>function append&lt;T&gt;(array: T[], value: T) {
+    return [...array, value];
+}</code></pre>
+</section>
+<section id="prepend-to-an-array" class="slide level3">
+<h3>Prepend to an array</h3>
+<pre class="ts"><code>function append&lt;T&gt;(array: T[], value: T) {
+    return [value, ...array];
+}</code></pre>
+</section>
+<section id="remove-an-array-element" class="slide level3">
+<h3>Remove an array element</h3>
+<pre class="ts"><code>function remove&lt;T&gt;(array: T[], index: number) {
+    return [
+        ...array.slice(0, index),
+        ...array.slice(index + 1),
+    ];
+}</code></pre>
+</section>
+<section id="replace-an-array-element" class="slide level3">
+<h3>Replace an array element</h3>
+<pre class="ts"><code>function replace&lt;T&gt;(array: T[], value: T, index: number) {
+    return [
+        ...array.slice(0, index),
+        value,
+        ...array.slice(index + 1),
+    ];
+}</code></pre>
+</section>
+<section id="object-spread-syntax" class="slide level3">
+<h3>Object spread syntax</h3>
+<pre class="js"><code>const ada = { firstname: &quot;Ada&quot;, lastname: &quot;Lovelace&quot; };
+const ada2 = { ...ada, age: 42 };</code></pre>
+</section></section>
+<section>
+<section id="exercise-6-form" class="title-slide slide level2">
+<h2><em class="type">Exercise 6</em> Form</h2>
+
+</section>
+<section id="goal-5" class="slide level3">
+<h3>Goal</h3>
+<p>Write a <code>&lt;Form /&gt;</code> component with a single state variable of the following type:</p>
+<pre class="ts"><code>interface UserForm {
+    firstname: string;
+    lastname: string;
+    age: number;
+}</code></pre>
+<p>Your component should show one <code>&lt;input&gt;</code> for each property of the <code>UserForm</code> interface, a submit button. On form submission (using <code>onSubmit</code> event), your show the content of the fields to the page.</p>
+<p>Please work on a <code>03-react/06-form</code> directory in your exercises repository.</p>
+</section></section>
+<section id="example-6-numbers-sum" class="title-slide slide level2">
+<h2><em class="type">Example 6</em> <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev/tree/main/03-react/examples/06-array-sum">Numbers sum</a></h2>
+
+</section>
+
+<section>
+<section id="exercise-7-to-do-list" class="title-slide slide level2">
+<h2><em class="type">Exercise 7</em> To-do list</h2>
+
+</section>
+<section id="goal-6" class="slide level3">
+<h3>Goal</h3>
+<p>Reproduce your todo list with React.</p>
+</section>
+<section id="step-1-add-the-react-boilerplate-5" class="slide level3">
+<h3><em class="type">Step 1</em> Add the React boilerplate</h3>
+<ul>
+<li>Copy the content of <code>03-react/examples/01-hello-world</code> example to a folder <code>03-react/07-todo-list</code> in your exercises repository.</li>
+<li>Then, run <code>npm install</code>.</li>
+<li>To compile your TypeScript code, use the <code>npm run build</code> (to compile once) or <code>npm run build:watch</code> (to automatically recompile on every change).</li>
+</ul>
+</section>
+<section id="step-2-state-type" class="slide level3">
+<h3><em class="type">Step 2</em> <code>State</code> type</h3>
+<p>Define a <code>TodoItem</code> type representing an individual todo list item. It should an object with the following attributes:</p>
+<ul>
+<li><code>created</code> (a number),</li>
+<li><code>done</code> (a boolean),</li>
+<li><code>title</code> (a string).</li>
+</ul>
+<p>The <code>created</code> attribute will hold the <em>timestamp</em> of the creation time of the item and will be used as a unique ID. See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now"><code>Date.now()</code></a>.</p>
+</section>
+<section id="step-3-state-type" class="slide level3">
+<h3><em class="type">Step 3</em> <code>State</code> type</h3>
+<p>Define an initial example state in a <code>initialTodos</code> variable of type <code>TodoItem[]</code>.</p>
+</section>
+<section id="step-4-todos-state-variable" class="slide level3">
+<h3><em class="type">Step 4</em> <code>todos</code> state variable</h3>
+<p>Edit the <code>App</code> component so that it contains a state variable <code>todos</code>, with the initial value <code>initialTodos</code>.</p>
+</section>
+<section id="step-5-display-the-list" class="slide level3">
+<h3><em class="type">Step 5</em> Display the list</h3>
+<p>Render the <code>todos</code> variable into a list, with a checkbox for each item.</p>
+</section>
+<section id="step-6-checkbox-handlers" class="slide level3">
+<h3><em class="type">Step 6</em> Checkbox handlers</h3>
+<p>Add event handlers so that the checkbox can be checked/unchecked, and that the state is updated accordingly.</p>
+</section>
+<section id="step-7-add-item-form" class="slide level3">
+<h3><em class="type">Step 7</em> Add item form</h3>
+<p>Add a form with a single input allowing to add an item.</p>
+</section>
+<section id="step-8-extra-persistence" class="slide level3">
+<h3><em class="type">Step 8 (extra)</em> Persistence</h3>
+<p>Save the state of your app to local storage.</p>
+</section>
+<section id="step-9-extra-filter" class="slide level3">
+<h3><em class="type">Step 9 (extra)</em> Filter</h3>
+<p>Add a <code>&lt;select&gt;</code> element allowing to filter items by “All”, “To do” or “Done”.</p>
+</section></section>
+<section>
+<section id="useeffect-hook" class="title-slide slide level2">
+<h2><code>useEffect</code> hook</h2>
+
+</section>
+<section id="reference-8" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://reactjs.org/docs/hooks-effect.html">Using the Effect Hook, React docs</a></p>
+</section>
+<section id="run-once-the-component-is-mounted" class="slide level3">
+<h3>Run once the component is mounted</h3>
+<pre class="tsx"><code>useEffect(() =&gt; console.log(&quot;Component did mount.&quot;), []);</code></pre>
+</section>
+<section id="run-when-a-state-variable-changes" class="slide level3">
+<h3>Run when a state variable changes</h3>
+<pre class="tsx"><code>const [text, setText] = React.useStat(&quot;&quot;);
+useEffect(
+    () =&gt; console.log(&quot;State variable &#39;text&#39; changed.&quot;),
+    [text]
+);</code></pre>
+</section></section>
+<section>
+<section id="react-router" class="title-slide slide level2">
+<h2>React router</h2>
+
+</section>
+<section id="reference-9" class="slide level3">
+<h3>Reference</h3>
+<p><a href="https://reactrouter.com/web/guides/quick-start">React Router documentation</a></p>
+</section>
+<section id="basic-routing" class="slide level3">
+<h3>Basic routing</h3>
+<pre class="tsx"><code>export default function App() {
+    return (
+        &lt;Router&gt;
+            &lt;div&gt;
+                &lt;nav&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt;
+                            &lt;Link to=&quot;/&quot;&gt;Home&lt;/Link&gt;
+                        &lt;/li&gt;
+                        &lt;li&gt;
+                            &lt;Link to=&quot;/about&quot;&gt;About&lt;/Link&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/nav&gt;
+
+                {/* A &lt;Switch&gt; looks through its children &lt;Route&gt;s and
+            renders the first one that matches the current URL. */}
+                &lt;Switch&gt;
+                    &lt;Route path=&quot;/about&quot;&gt;About&lt;/Route&gt;
+                    &lt;Route path=&quot;/&quot;&gt;Home&lt;/Route&gt;
+                &lt;/Switch&gt;
+            &lt;/div&gt;
+        &lt;/Router&gt;
+    );
+}</code></pre>
+</section>
+<section id="url-parameters" class="slide level3">
+<h3>URL Parameters</h3>
+<pre class="tsx"><code>function User() {
+    const params = useParams&lt;{ id: string }&gt;();
+
+    return &lt;p&gt;{param.id}&lt;/p&gt;;
+}
+
+export default function App() {
+    return (
+        &lt;Router&gt;
+            &lt;div&gt;
+                &lt;nav&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt;
+                            &lt;Link to=&quot;/&quot;&gt;Home&lt;/Link&gt;
+                        &lt;/li&gt;
+                        &lt;li&gt;
+                            &lt;Link to=&quot;/user/1&quot;&gt;User 1&lt;/Link&gt;
+                        &lt;/li&gt;
+                        &lt;li&gt;
+                            &lt;Link to=&quot;/user/2&quot;&gt;User 2&lt;/Link&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/nav&gt;
+                &lt;Switch&gt;
+                    &lt;Route path=&quot;/user/:id&quot; children={&lt;User /&gt;}&gt;
+                        About
+                    &lt;/Route&gt;
+                    &lt;Route path=&quot;/&quot;&gt;Home&lt;/Route&gt;
+                &lt;/Switch&gt;
+            &lt;/div&gt;
+        &lt;/Router&gt;
+    );
+}</code></pre>
+</section></section>
+<section>
+<section id="exercise-8-powercoders-participants" class="title-slide slide level2">
+<h2><em class="type">Exercise 8</em> Powercoders participants</h2>
+
+</section>
+<section id="goal-7" class="slide level3">
+<h3>Goal</h3>
+<ul>
+<li>On the homepage, show a list of contributors to the <a href="https://github.com/Powercoders-Switzerland/2021-1-web-dev">2021-1-web-dev</a> repo.</li>
+<li>On route <code>/participant/:name</code>, show information about a single participant with GitHub username <code>:name</code>.</li>
+</ul>
+</section>
+<section id="details" class="slide level3">
+<h3>Details</h3>
+<ul>
+<li>Work in a folder <code>03-react/08-participants</code> in your exercises repository. You can start from the <code>07-animals</code> example and edit it (please remove the awful styles!).</li>
+<li>Use the following <a href="https://docs.github.com/en/rest">GitHub API</a> endpoints:
+<ul>
+<li><a href="https://docs.github.com/en/rest/reference/repos#list-repository-contributors"><code>/repos/{owner}/{repo}/contributors</code></a>,</li>
+<li><a href="https://docs.github.com/en/rest/reference/users#get-a-user"><code>users/{username}</code></a>.</li>
+</ul></li>
+<li>You do not need an API key.</li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/plugin/search/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.1/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+      
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-c.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-tsx.min.js"></script>
+    <script>
+    	for (const preEl of document.querySelectorAll("pre")) {
+    		const className = preEl.getAttribute("class");
+
+    		if (className) {
+    			const codeEl = preEl.querySelector("code");
+    			if (!Prism.languages[className]) {
+    				throw new Error(className + " does not exist.");
+    			}
+    			codeEl.innerHTML = Prism.highlight(
+    				codeEl.textContent,
+    				Prism.languages[className],
+    				className
+    			);
+    		}
+    	}
+    </script>
+    </body>
+</html>
